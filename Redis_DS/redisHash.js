@@ -1,4 +1,4 @@
-const redisClient = require("./redisClient");
+const redisClient = require("../redisClient");
 
 // on "connect" -> event
 redisClient.on("connect", () => {

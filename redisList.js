@@ -10,21 +10,32 @@ redisClient.on("disconnect", () => {
   console.log("Redis is disconnected");
 });
 
+// Read doc for more methods and func
 const inti = async () => {
   // left push
-  const res1 = await redisClient.lpush("msgs", "krish");
-  console.log(res1);
-
-  const res2 = await redisClient.lpush("msgs", "singh");
-  console.log(res2);
-
+  await redisClient.lpush("msgs", "krish");
 
   // left pop
-  const res3 = await redisClient.lpop("msgs");
-  console.log(res3);
+  const res = await redisClient.lpop("msgs");
+  console.log(res);
 
-  const res4 = await redisClient.lpop("msgs");
-  console.log(res4);
+  await redisClient.rpush("array", 1);
+  await redisClient.rpush("array", 2);
+  await redisClient.rpush("array", 3);
+  await redisClient.rpush("array", 4);
+  await redisClient.rpush("array", 5);
+
+  // Blocking mode me left se pop
+  const x = await redisClient.blpop("array", 10);
+  console.log("result is: ", x);
+
+  const ans = await redisClient.lrange("array", 0, -1);
+  console.log("ans is: ", ans);
+
+  // await redisClient.lpush("username", "krish singh");
+
+  // delete key
+  await redisClient.del("username");
 };
 
 inti();
